@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE ">Kommunity</title>
+    <!--    <link rel="stylesheet" th:href="@{/pub/bootstrap.min.css}">-->
+    <link rel="stylesheet" href="https://bootswatch.com/5/sketchy/bootstrap.min.css"/>
+</head>
+<body>
+
+<div class="container">
+    <nav class="my-4 navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">Kommunity</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           th:classappend="${ #httpServletRequest.requestURI == '/' || #httpServletRequest.requestURI.startsWith('/topics/') ? 'active' : '' }"
+                           aria-current="page" th:href="@{/}">Threads</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown" sec:authorize="isFullyAuthenticated()">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false" th:text="${#authentication.name}">
+
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <form th:action="@{/logout}" method="post">
+                                    <button class="dropdown-item" href="#">Sign out</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isFullyAuthenticated()">
+                        <a class="nav-link" th:href="@{/login}">Sign in</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isFullyAuthenticated()">
+                        <a class="nav-link" th:href="@{/register}">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<main layout:fragment="contents"></main>
+
+<script th:src="@{/pub/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

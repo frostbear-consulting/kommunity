@@ -1,0 +1,44 @@
+<!doctype html>
+<html
+        lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{partials/page}">
+<head>
+    <title>Login</title>
+    <style>
+        .card {
+            max-width: 90%;
+            width: 400px;
+            margin: 2rem auto;
+        }
+    </style>
+</head>
+<body>
+<main layout:fragment="contents" class="card">
+    <form method="post" th:action="@{/login.do}" th:object="${form}" class="card-body">
+        <h1>Sign in</h1>
+
+        <p>
+            Not having an account? <a th:href="@{/register}">Register a new account!</a>
+        </p>
+
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" autocomplete="username" required maxlength="16" pattern="[a-z0-9A-Z]+"
+                   th:field="*{username}" id="username"
+                   class="form-control" autofocus>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" autocomplete="current-password" required th:field="*{password}" id="password"
+                   class="form-control">
+        </div>
+
+        <div th:replace="partials/messages :: all"></div>
+
+        <button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
+</main>
+</body>
+</html>

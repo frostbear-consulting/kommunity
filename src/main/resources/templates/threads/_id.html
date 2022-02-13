@@ -1,0 +1,57 @@
+<!doctype html>
+<html
+        lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+        layout:decorate="~{partials/page}">
+<head>
+    <title th:text="${thread.title + ' - Thread'}"></title>
+    <style>
+        article {
+            white-space: pre-wrap;
+            max-width: 100%;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+<main layout:fragment="contents" class="container">
+
+    <div th:replace="partials/messages :: all"></div>
+
+    <h1 th:text="${thread.title}"></h1>
+    <h2 class="fs-6">
+        By <span th:text="${thread.author.username}" class="text-decoration-underline"></span> on <span
+            th:text="${#temporals.format(thread.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+    </h2>
+
+    <article th:text="${thread.text}"></article>
+
+    <hr/>
+
+    <form sec:authorize="isFullyAuthenticated()" method="post"
+          th:action="@{/portal/threads/{id}/comments(id=${thread.idThread})}" th:object="${form}">
+        <div class="mb-3">
+            <label for="text" class="form-label">Comment</label>
+            <textarea required
+                      th:classappend="${#fields.hasErrors('comment') ? 'is-invalid' : ''}"
+                      th:field="*{comment}" id="text" class="form-control" rows="4"></textarea>
+            <div th:if="${#fields.hasErrors('comment')}" class="invalid-feedback" th:errors="*{comment}"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add comment</button>
+    </form>
+
+    <div th:remove="tag" th:if="${!thread.comments.empty}">
+        <h3 class="fs-4 mt-5">Comments</h3>
+
+        <div th:each="comment: ${thread.comments}" class="mb-3 overflow-auto">
+            <small>
+                <span th:text="${comment.author.username}"></span> ( <span
+                    th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></span> )
+                <p style="white-space: pre-wrap;" th:text="${comment.comment}"></p>
+            </small>
+        </div>
+    </div>
+</main>
+</body>
+</html>

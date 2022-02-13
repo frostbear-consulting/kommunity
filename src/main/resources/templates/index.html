@@ -1,0 +1,44 @@
+<!doctype html>
+<html
+        lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+        layout:decorate="~{partials/page}">
+<head>
+    <title>Homepage</title>
+</head>
+<body>
+<main layout:fragment="contents" class="container">
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${loggedOut}">
+        You have been logged out
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:replace="partials/messages :: all"></div>
+    <h1>Threads</h1>
+
+    <div class="text-end mb-5" sec:authorize="isFullyAuthenticated()">
+        <a th:href="@{/portal/new}" class="btn btn-primary">Create thread</a>
+    </div>
+
+    <div th:each="thread: ${threads}" class="card mb-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <h2>
+                        <a th:href="@{/threads/{id}(id=${thread.idThread})}" th:text="${thread.title}"></a>
+                    </h2>
+                </div>
+                <div class="col text-end">
+                    <small th:text="${thread.author.username}"></small><br/>
+                    <small th:text="${#temporals.format(thread.createdAt, 'yyyy-MM-dd HH:mm')}"></small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="partials/pagination :: pagination(${threads})"></div>
+</main>
+</body>
+</html>

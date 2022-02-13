@@ -1,0 +1,49 @@
+<!doctype html>
+<html
+        lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{partials/page}">
+<head>
+    <title>Register</title>
+    <style>
+        .card {
+            max-width: 90%;
+            width: 400px;
+            margin: 2rem auto;
+        }
+    </style>
+</head>
+<body>
+<main layout:fragment="contents" class="card">
+    <form method="post" th:action="@{/register}" th:object="${form}" class="card-body">
+        <h1>Register new account</h1>
+
+        <p>
+            Already having an account? <a th:href="@{/login}">Sign in instead!</a>
+        </p>
+
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" required maxlength="16" th:field="*{username}" id="username"
+                   autocomplete="off" spellcheck="false" class="form-control" autofocus
+                   th:classappend="${#fields.hasErrors('username') ? 'is-invalid' : ''}"
+            >
+
+            <div th:if="${#fields.hasErrors('username')}" class="invalid-feedback" th:errors="*{username}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" autocomplete="new-password" required th:field="*{password}" id="password"
+                   th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}"
+                   class="form-control">
+            <div th:if="${#fields.hasErrors('password')}" class="invalid-feedback" th:errors="*{password}"></div>
+        </div>
+
+        <div th:replace="partials/messages :: all"></div>
+
+        <button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
+</main>
+</body>
+</html>

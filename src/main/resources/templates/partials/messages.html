@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="success" th:remove="tag">
+    <div class="alert alert-success my-4" th:text="${successMessage}" th:if="${successMessage}"></div>
+</div>
+
+<div th:fragment="error" th:remove="tag">
+    <div class="alert alert-danger my-4" th:text="${errorMessage}" th:if="${errorMessage}"></div>
+</div>
+
+<div th:fragment="all" th:remove="tag">
+    <div th:replace=":: success"></div>
+    <div th:replace=":: error"></div>
+</div>
+
+</html>

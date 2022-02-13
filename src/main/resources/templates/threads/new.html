@@ -1,0 +1,38 @@
+<!doctype html>
+<html
+        lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/xhtml"
+        layout:decorate="~{partials/page}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>New thread</title>
+</head>
+<body>
+<main layout:fragment="contents" class="container">
+
+    <h1>Create thread</h1>
+
+    <form method="post" th:action="@{/portal/new}" th:object="${form}">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" autocomplete="off" required maxlength="128"
+                   th:field="*{title}" id="title"
+                   th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}"
+                   class="form-control" autofocus>
+            <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback" th:errors="*{title}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="text" class="form-label">Text</label>
+            <textarea required th:field="*{text}" id="text"
+                      th:classappend="${#fields.hasErrors('text') ? 'is-invalid' : ''}" class="form-control"
+                      rows="10"></textarea>
+            <div th:if="${#fields.hasErrors('text')}" class="invalid-feedback" th:errors="*{text}"></div>
+        </div>
+
+        <div th:replace="partials/messages :: all"></div>
+
+        <button type="submit" class="btn btn-primary">Create thread</button>
+    </form>
+
+</main>
+</body>
+</html>

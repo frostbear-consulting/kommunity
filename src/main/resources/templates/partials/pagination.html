@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<nav th:fragment="pagination(page)" role="navigation" aria-label="pagination">
+    <ul class="pagination">
+        <li class="page-item" th:if="${page.hasPrevious()}">
+            <a class="page-link" th:href="@{''(page=${page.getNumber() - 1}, size=${ param.size?: 20}) }">
+                Previous page
+            </a>
+        </li>
+        <li class="page-item" th:if="${page.hasNext()}">
+            <a class="page-link" th:href="@{''(page=${page.getNumber() + 1}, size=${ param.size?: 20}) }">
+                Next page
+            </a>
+        </li>
+    </ul>
+</nav>
+
+</html>

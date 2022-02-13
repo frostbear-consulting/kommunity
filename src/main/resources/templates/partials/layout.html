@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE ">Kommunity</title>
+    <link rel="stylesheet" th:href="@{/pub/bootstrap.min.css}">
+</head>
+<body>
+<main layout:fragment="contents"></main>
+
+<script th:src="@{/pub/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
